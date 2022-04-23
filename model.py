@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+# NOTE: On torch version 1.7 (which I was previously on), the "same" padding option was not valid for Conv2d. Requires torch v1.10 and up
+
 class DoubleConvBlock(nn.Module):
   # (conv) => (dropout+ReLU) => (conv) => (bn+ReLU)
 
@@ -10,19 +12,19 @@ class DoubleConvBlock(nn.Module):
 
     if batch_norm:
       self.conv = nn.Sequential(
-          nn.Conv2d(in_ch, out_ch, 3, padding='same'),
+          nn.Conv2d(in_ch, out_ch // 2, 3, padding="same"),
           nn.Dropout2d(0.1),
           nn.ReLU(inplace=True),
-          nn.Conv2d(in_ch, out_ch, 3, padding='same'),
+          nn.Conv2d(out_ch // 2, out_ch, 3, padding="same"),
           nn.BatchNorm2d(out_ch),             # Heavily debated, but have decided to normalize before activation
           nn.ReLU(inplace=True)
       )
     else:
       self.conv = nn.Sequential(
-          nn.Conv2d(in_ch, out_ch, 3, padding='same'),
+          nn.Conv2d(in_ch, out_ch // 2, 3, padding="same"),
           nn.Dropout2d(0.1),
           nn.ReLU(inplace=True),
-          nn.Conv2d(in_ch, out_ch, 3, padding='same'),
+          nn.Conv2d(out_ch // 2, out_ch, 3, padding="same"),
           nn.ReLU(inplace=True)
       )
 
@@ -44,10 +46,10 @@ class PoolConvBlock(nn.Module):
 class TConv(nn.Module):
   # (ConvTranspose) => (ReLU)
 
-  def __init__(self, in_ch, out_ch, kernel_size):
+  def __init__(self, in_ch, out_ch, kernel_size, stride=None):
     super(TConv, self).__init__()
     self.conv = nn.Sequential(
-          nn.ConvTranspose2d(in_ch, out_ch, 3, padding='same'),
+          nn.ConvTranspose2d(in_ch, out_ch, kernel_size, padding=1, stride=stride),
           nn.ReLU(inplace=True)
       )
   
@@ -62,38 +64,38 @@ class UNet(nn.Module):
         # d1=Dropout(0.1)(conv1)
         # conv2 = Conv2D(32,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(d1)
         # b=BatchNormalization()(conv2)
-        self.conv = DoubleConvBlock(32, 32, (3,3))
+        self.conv = DoubleConvBlock(1, 32, (3,3))
         
         # pool1 = MaxPooling2D(pool_size=(2, 2))(b)
         # conv3 = Conv2D(64,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(pool1)
         # d2=Dropout(0.2)(conv3)
         # conv4 = Conv2D(64,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(d2)
         # b1=BatchNormalization()(conv4)
-        self.pconv1 = PoolConvBlock(conv_in_ch=64, conv_out_ch=64)
+        self.pconv1 = PoolConvBlock(conv_in_ch=32, conv_out_ch=64)
 
         # pool2 = MaxPooling2D(pool_size=(2, 2))(b1)
         # conv5 = Conv2D(128,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(pool2)
         # d3=Dropout(0.3)(conv5)
         # conv6 = Conv2D(128,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(d3)
         # b2=BatchNormalization()(conv6)
-        self.pconv2 = PoolConvBlock(conv_in_ch=128, conv_out_ch=128)
+        self.pconv2 = PoolConvBlock(conv_in_ch=64, conv_out_ch=128)
         
         # pool3 = MaxPooling2D(pool_size=(2, 2))(b2)
         # conv7 = Conv2D(256,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(pool3)
         # d4=Dropout(0.4)(conv7)
         # conv8 = Conv2D(256,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(d4)
         # b3=BatchNormalization()(conv8)
-        self.pconv3 = PoolConvBlock(conv_in_ch=256, conv_out_ch=256)
+        self.pconv3 = PoolConvBlock(conv_in_ch=128, conv_out_ch=256)
         
         # pool4 = MaxPooling2D(pool_size=(2, 2))(b3)
         # conv9 = Conv2D(512,(3,3),activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(pool4)
         # d5=Dropout(0.5)(conv9)
         # conv10 = Conv2D(512,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(d5)
         # b4=BatchNormalization()(conv10)
-        self.pconv4 = PoolConvBlock(conv_in_ch=512, conv_out_ch=512)
+        self.pconv4 = PoolConvBlock(conv_in_ch=256, conv_out_ch=512)
         
         # conv11 = Conv2DTranspose(512,(4,4), activation = 'relu', padding = 'same', strides=(2,2),kernel_initializer = 'he_normal')(b4)
-        self.tconv1 = TConv(512, 256, (4,4))
+        self.tconv1 = TConv(512, 256, (4,4), stride=(2,2))
         # x= concatenate([conv11,conv8])
 
         # conv12 = Conv2D(256,(3,3), activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(x)
@@ -103,7 +105,7 @@ class UNet(nn.Module):
         self.conv1 = DoubleConvBlock(256, 256, (3,3))
         
         # conv14 = Conv2DTranspose(256,(4,4), activation = 'relu', padding = 'same', strides=(2,2),kernel_initializer = 'he_normal')(b5)
-        self.tconv2 = TConv(256, 128, (4,4))
+        self.tconv2 = TConv(256, 128, (4,4), stride=(2,2))
         # x1=concatenate([conv14,conv6])
 
         # conv15 = Conv2D(128,3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(x1)
@@ -113,7 +115,7 @@ class UNet(nn.Module):
         self.conv2 = DoubleConvBlock(128, 128, 3)
         
         # conv17 = Conv2DTranspose(128,(4,4), activation = 'relu', padding = 'same',strides=(2,2), kernel_initializer = 'he_normal')(b6)
-        self.tconv3 = TConv(128, 64, (4,4))
+        self.tconv3 = TConv(128, 64, (4,4), stride=(2,2))
         
         # x2=concatenate([conv17,conv4])
 
@@ -124,7 +126,7 @@ class UNet(nn.Module):
         self.conv3 = DoubleConvBlock(64, 64, 3)
 
         # conv20 = Conv2DTranspose(64,(4,4), activation = 'relu', padding = 'same',strides=(2,2), kernel_initializer = 'he_normal')(b7)
-        self.tConv4 = TConv(64, 32, (4,4))
+        self.tconv4 = TConv(64, 32, (4,4), stride=(2,2))
         
         # x3=concatenate([conv20,conv2])
 
@@ -134,7 +136,7 @@ class UNet(nn.Module):
         self.conv4 = DoubleConvBlock(32, 32, (3,3), batch_norm=False)
 
         self.conv5 = nn.Sequential(
-            nn.Conv2d(1, 1, (1,1), padding='same'),
+            nn.Conv2d(32, 1, (1,1), padding="same"),
             nn.ReLU()
         )
         # outputs = Conv2D(1,(1,1), activation = last_activation, padding = 'same', kernel_initializer = 'he_normal')(conv22)
@@ -142,42 +144,42 @@ class UNet(nn.Module):
     def forward(self, x):
 
       # Reduce
-      # 512 x 512 x 32
+      # Outputs 512 x 512 x 32
       x = self.conv(x)
 
-      # 256 x 256 x 64
+      # Outputs 256 x 256 x 64
       x = self.pconv1(x)
 
-      # 128 x 128 x 128
+      # Outputs 128 x 128 x 128
       x = self.pconv2(x)
 
-      # 64 x 64 x 256
+      # Outputs 64 x 64 x 256
       x = self.pconv3(x)
 
-      # 32 x 32 x 512
+      # Outputs 32 x 32 x 512
       x = self.pconv4(x)
 
       # Expand
       
-      # 64 x 64 x 256
+      # Outputs 64 x 64 x 256
       x = self.tconv1(x)
       x = self.conv1(x)
 
-      # Needs DoubleConvBlock
+      # May need DoubleConvBlock? or shortcut may be best actually
 
-      # 128 x 128 x 128
+      # Outputs 128 x 128 x 128
       x = self.tconv2(x)
       x = self.conv2(x)
 
-      # 256 x 256 x 64
+      # Outputs 256 x 256 x 64
       x = self.tconv3(x)
       x = self.conv3(x)
 
-      # 512 x 512 x 32
+      # Outputs 512 x 512 x 32
       x = self.tconv4(x)
       x = self.conv4(x)
 
-      # 512 x 512 x 1
+      # Outputs 512 x 512 x 1
       x = self.conv5(x)
 
-      return F.sigmoid(x)
+      return torch.sigmoid(x)
