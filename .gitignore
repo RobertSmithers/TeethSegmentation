@@ -1,4 +1,5 @@
-data/*
+data/3D_scans/*
+data/labels/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
