@@ -179,6 +179,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Robert Smithers - [Website](https://robertsmithers.github.io/) - rjsmithers3@gmail.com
 
+Yuting Ji - jiyz@bc.edu
+
+Daniella Zunic - zunicd@bc.edu
+
 Project Link: [https://github.com/RobertSmithers/3DTeethSegmentation](https://github.com/RobertSmithers/3DTeethSegmentation)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
