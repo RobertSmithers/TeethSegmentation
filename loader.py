@@ -1,5 +1,6 @@
 import os
 import random
+from re import X
 import numpy as np
 import pandas as pd
 import cv2
@@ -57,66 +58,55 @@ def gen_csv():
     df.to_csv('data/sample.csv',index=False)
 ###Load DATA
 
-def rename():
-    ###rename all files in masked_img folder
-    folder='data/masked_img'
-    for file_name in os.listdir(folder):
-        source = folder+'/'+file_name
-        destination = source.replace('_m.png','.png')
-        os.rename(source, destination)
+# def rename():
+#     ###rename all files in masked_img folder
+#     folder='data/masked_img'
+#     for file_name in os.listdir(folder):
+#         source = folder+'/'+file_name
+#         destination = source.replace('_m.png','.png')
+#         os.rename(source, destination)
 
-def mergefiles():
-    ###move renamed files to Images folder
-    folder='data/masked_img'
-    for file_name in os.listdir(folder):
-      source = folder+'/'+file_name
-      destination = 'data/original_img/'+file_name
-      os.rename(source,destination)
+# def mergefiles():
+#     ###move renamed files to Images folder
+#     folder='data/masked_img'
+#     for file_name in os.listdir(folder):
+#       source = folder+'/'+file_name
+#       destination = 'data/original_img/'+file_name
+#       os.rename(source,destination)
+
+def get_fnames(root):
+  xs, ys = os.listdir(os.path.join(root, 'original_img')), os.listdir(os.path.join(root, 'masked_img'))
+  f = lambda fname: int(fname.split('.png')[0])
+  xs = sorted(xs, key=f)
+  ys = sorted(ys, key=f)
+  return xs, ys
 
 # our dataset class
 rest_set_size = 0.3
 test_set_size = 0.5
 class dset(Dataset):
-    def __init__(self, root_dir='data', train=True,test=True,transformX = None, transformY = None):
+    def __init__(self, data, labels, root_dir='data', transformX = None, transformY = None):
 
-      try:
-        self.pixel_file = pd.read_csv(os.path.join(root_dir, 'sample.csv'))
-      except:
-        df = pd.DataFrame(np.arange(1,117))
-        df.to_csv(os.path.join(root_dir,'sample.csv'))
-        self.pixel_file = pd.read_csv(os.path.join(root_dir, 'sample.csv'))
+      # try:
+      #   self.pixel_file = pd.read_csv(os.path.join(root_dir, 'sample.csv'))
+      # except:
+      #   df = pd.DataFrame(np.arange(1,117))
+      #   df.to_csv(os.path.join(root_dir,'sample.csv'))
+      #   self.pixel_file = pd.read_csv(os.path.join(root_dir, 'sample.csv'))
 
       self.root_dir = root_dir
       self.transformX = transformX
       self.transformY = transformY
-      self.train = train
-      self.test = test
-
-      # split the dataset to train and rest
-      # split the rest to validation and test
-      self.train_data, self.rest_data = train_test_split(self.pixel_file, test_size = rest_set_size, random_state = 5)
-      self.validation_data, self.test_data = train_test_split(self.rest_data, test_size = test_set_size, random_state = 5)
+      self.X = data
+      self.Y = labels
 
     def __len__(self):
-        if self.train:
-          length = len(self.train_data)
-        elif self.test:
-          length = len(self.test_data)
-        else:
-          length = len(self.validation_data)
-        return length
+        return len(self.Y)
 
     def __getitem__(self, index):
-        if self.train:
-          imx_name = os.path.join(self.root_dir, 'original_img',self.train_data.iloc[index, 0])
-          imy_name = os.path.join(self.root_dir, 'original_img',self.train_data.iloc[index, 0].replace('.png','_m.png'))
-        elif self.test:
-          imx_name = os.path.join(self.root_dir, 'original_img',self.test_data.iloc[index, 0])
-          imy_name = os.path.join(self.root_dir, 'original_img',self.test_data.iloc[index, 0].replace('.png','_m.png'))
-        else:
-          imx_name = os.path.join(self.root_dir, 'original_img', self.validation_data.iloc[index, 0])
-          imy_name = os.path.join(self.root_dir, 'original_img',self.validation_data.iloc[index, 0].replace('.png','_m.png'))
-
+        fname = self.data.iloc[index, 0]
+        imx_name = os.path.join(self.root_dir, 'original_img', fname)
+        imy_name = os.path.join(self.root_dir, 'masked_img', fname)
         imx = Image.open(imx_name)
         imy = Image.open(imy_name).convert('L')
 
@@ -152,10 +142,18 @@ tx_X = transforms.Compose([ transforms.Resize((512, 512)),
 tx_Y = transforms.Compose([ transforms.Resize((512, 512)),
                               transforms.ToTensor()
                               ])
-train_data = dset('data', train = True, test=False, transformX = tx_X, transformY = tx_Y)
-validation_data = dset('data', train = False,test=False,transformX = tx_X, transformY = tx_Y)
-test_data = dset('data', train = False, test=True,transformX = tx_X, transformY = tx_Y)
+
+x_data, y_data = get_fnames(root='data')
+
+# split the dataset to train and rest
+# split the rest to validation and test
+train_x, other_x, train_y, other_y = train_test_split(x_data, y_data, test_size = rest_set_size, random_state = 5)
+val_x, test_x, val_y, test_y = train_test_split(other_x, other_y, test_size = test_set_size, random_state = 5)
+
+train_data = dset(train_x, train_y, 'data', transformX = tx_X, transformY = tx_Y)
+val_data = dset(val_x, val_y, 'data', transformX = tx_X, transformY = tx_Y)
+test_data = dset(test_x, test_y, 'data', transformX = tx_X, transformY = tx_Y)
 
 train_loader = DataLoader(dataset=train_data, batch_size=2, shuffle=True, num_workers=2)
-validation_loader = DataLoader(dataset=validation_data, batch_size=2, shuffle=True, num_workers=2)
+val_loader = DataLoader(dataset=val_data, batch_size=2, shuffle=True, num_workers=2)
 test_loader = DataLoader(dataset=test_data, batch_size=2, shuffle=True, num_workers=2)
