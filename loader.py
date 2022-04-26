@@ -98,7 +98,7 @@ class dset(Dataset):
 
     def __getitem__(self, index):
         fname = self.data[index]
-        
+
         imx_name = os.path.join(self.root_dir, 'original_img', fname)
         imy_name = os.path.join(self.root_dir, 'masked_img', fname)
         imx = Image.open(imx_name)
@@ -129,11 +129,11 @@ class dset(Dataset):
         sample = {'image': imx, 'annotation': imy}
         return sample
 
-tx_X = transforms.Compose([ transforms.Resize((512, 512)),
+tx_X = transforms.Compose([ transforms.Resize((3100, 1200)),
                               transforms.ToTensor(),
                               transforms.Normalize((0.5,), (0.5,))
                               ])
-tx_Y = transforms.Compose([ transforms.Resize((512, 512)),
+tx_Y = transforms.Compose([ transforms.Resize((3100, 1200)),
                               transforms.ToTensor()
                               ])
 
