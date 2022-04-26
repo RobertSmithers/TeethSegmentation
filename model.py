@@ -145,19 +145,19 @@ class UNet(nn.Module):
 
       # Reduce
       # Outputs 512 x 512 x 32
-      x = self.conv(x)
+      layer1 = self.conv(x)
 
       # Outputs 256 x 256 x 64
-      x = self.pconv1(x)
+      layer2 = self.pconv1(layer1)
 
       # Outputs 128 x 128 x 128
-      x = self.pconv2(x)
+      layer3 = self.pconv2(layer2)
 
       # Outputs 64 x 64 x 256
-      x = self.pconv3(x)
+      layer4 = self.pconv3(layer3)
 
       # Outputs 32 x 32 x 512
-      x = self.pconv4(x)
+      x = self.pconv4(layer4)
 
       # Expand
       
@@ -165,19 +165,31 @@ class UNet(nn.Module):
       x = self.tconv1(x)
       x = self.conv1(x)
 
+      # Shortcut 4
+      x = x + layer4
+
       # May need DoubleConvBlock? or shortcut may be best actually
 
       # Outputs 128 x 128 x 128
       x = self.tconv2(x)
       x = self.conv2(x)
 
+      # Shortcut 3
+      x = x + layer3
+
       # Outputs 256 x 256 x 64
       x = self.tconv3(x)
       x = self.conv3(x)
 
+      # Shortcut 2
+      x = x + layer2
+
       # Outputs 512 x 512 x 32
       x = self.tconv4(x)
       x = self.conv4(x)
+      
+      # Shortcut 1
+      x = x + layer1
 
       # Outputs 512 x 512 x 1
       x = self.conv5(x)
