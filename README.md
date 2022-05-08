@@ -143,9 +143,20 @@ I hope this repository will help advance research within the academic community!
 
 See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issues) for a full list of proposed features (and known issues).
 
+## work distribution
+
+- Robert Smithers:
+- Yuting Ji:
+  - 3D render for original 3D mesh dataset
+  - Gathering x-ray data from provider(stored in TeethSegmentation/data)
+  - 'Loader.ipynb' (illustration of our loading process)
+  - 'Loader.py' (contains function to load data to train,valid,test)
+  - 'connected_component_segmentation.ipynb' (illustration of watershed post-process)
+  - 'connected_component.py' (contains function to post-process images using connected component and watershed)
+  - Creating and modifying the PowerPoint for presentation
+- Danilla Zunic:
+
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
