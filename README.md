@@ -147,13 +147,10 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 
 - Robert Smithers:
 - Yuting Ji:
-  - 'pytorch3d_render.ipynb' (3D render for original 3D mesh dataset)
-  - Gathering new X-ray data from provider (stored in TeethSegmentation/data)
   - 'Loader.ipynb' (illustration of our loading process)
   - 'Loader.py' (contains functions to load data to train,valid,test)
   - 'connected_component_segmentation.ipynb' (illustration of watershed post-process)
   - 'connected_component.py' (contains functions to post-process images using connected component and watershed)
-  - Creating and modifying the PowerPoint for presentation
 - Danilla Zunic:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
