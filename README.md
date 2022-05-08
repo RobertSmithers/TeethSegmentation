@@ -147,7 +147,7 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 
 - Robert Smithers:
 - Yuting Ji:
-  - 3D render for original 3D mesh dataset
+  - 'pytorch3d_render.ipynb' (3D render for original 3D mesh dataset)
   - Gathering new X-ray data from provider (stored in TeethSegmentation/data)
   - 'Loader.ipynb' (illustration of our loading process)
   - 'Loader.py' (contains function to load data to train,valid,test)
