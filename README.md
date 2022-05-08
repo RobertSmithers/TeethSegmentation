@@ -143,7 +143,7 @@ I hope this repository will help advance research within the academic community!
 
 See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issues) for a full list of proposed features (and known issues).
 
-## work distribution
+## Work Contribution
 
 - Robert Smithers:
 - Yuting Ji:
