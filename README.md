@@ -1,5 +1,5 @@
-# 3DTeethSegmentation
-Identify teeth in 3D using segmentation and labelling.
+# TeethSegmentation
+Identify teeth in x-ray images using instance segmentation and labelling.
 
 <div id="top"></div>
 
