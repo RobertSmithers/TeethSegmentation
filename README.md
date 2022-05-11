@@ -145,13 +145,20 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 
 ## Work Contribution
 
-- Robert Smithers:
-- Yuting Ji:
-  - 'Loader.ipynb' (illustration of our loading process)
-  - 'Loader.py' (contains functions to load data to train,valid,test)
-  - 'connected_component_segmentation.ipynb' (illustration of watershed post-process)
-  - 'connected_component.py' (contains functions to post-process images using connected component and watershed)
-- Danilla Zunic:
+- README.md: Robert, Yuting
+- data/: Yuting, Danilla
+- results/: Robert
+- '3Ddata_attempt.ipynb': Robert
+- 'X-Ray TeethSegmentation.pptx'(the powerpoint): Yuting, Danilla, Robert
+- 'connected_component.py': Yuting, Danilla
+  - 'connected_component_segmentation.ipynb': Yuting
+- 'Loader.py': Yuting
+  - 'data_preparation.ipynb': Danilla, Yuting
+  - 'Loader.ipynb': Yuting
+- 'model.py': Robert, Yuting
+- 'pytorch3d_render.ipynb': Yuting
+- 'train.ipynb': Robert
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
