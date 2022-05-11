@@ -150,8 +150,8 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 - results/: Robert
 - '3Ddata_attempt.ipynb': Robert
 - 'X-Ray TeethSegmentation.pptx'(the powerpoint): Yuting, Danilla, Robert
-- 'connected_component.py': Yuting, Danilla
-  - 'connected_component_segmentation.ipynb': Yuting
+- 'connected_component.py': Yuting
+  - 'connected_component_segmentation.ipynb': Yuting, Danilla
 - 'Loader.py': Yuting
   - 'data_preparation.ipynb': Danilla, Yuting
   - 'Loader.ipynb': Yuting
