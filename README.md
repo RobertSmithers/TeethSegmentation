@@ -155,7 +155,7 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 - 'Loader.py': Yuting
   - 'data_preparation.ipynb': Danilla, Yuting
   - 'Loader.ipynb': Yuting
-- 'model.py': Robert, Yuting
+- 'model.py': Robert
 - 'pytorch3d_render.ipynb': Yuting
 - 'train.ipynb': Robert
 
