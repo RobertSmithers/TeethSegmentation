@@ -15,7 +15,7 @@ class DoubleConvBlock(nn.Module):
           nn.Conv2d(in_ch, out_ch, 3, padding="same"),
           nn.Dropout2d(0.1),
           nn.BatchNorm2d(out_ch),
-          nn.LeakyReLU(inplace=True),
+          # nn.LeakyReLU(inplace=True),
           nn.Conv2d(out_ch, out_ch, 3, padding="same"),
           nn.BatchNorm2d(out_ch),             # Heavily debated, but have decided to normalize before activation
           nn.LeakyReLU(inplace=True)
@@ -42,8 +42,8 @@ class PoolConvBlock(nn.Module):
     self.conv = DoubleConvBlock(conv_in_ch, conv_out_ch, conv_kernel_size, batch_norm=batch_norm)
 
   def forward(self, x):
-    x = self.conv(x)
     p = self.pool(x)
+    x = self.conv(p)
     return x, p
 
 class TConv(nn.Module):
@@ -148,73 +148,49 @@ class UNet(nn.Module):
 
     def forward(self, x):
 
-      # print("level 0 channels", x.shape[2])
-      # Reduce
+      ### Reduce ###
+      
       # Outputs 512 x 512 x 32
-      layer1 = self.conv(x)
-      # print("level 1 channels", layer1.shape[2])
+      skip1 = self.conv(x)
+      # print("level 1 layer+skip", skip1.shape)
 
       # Outputs 256 x 256 x 64
-      skip1, layer2 = self.pconv1(layer1)
-      # print("level 2 channels", layer2.shape[2])
+      skip2, layer2 = self.pconv1(skip1)
+      # print("level 2 layer/skip", layer2.shape, skip2.shape)
 
       # Outputs 128 x 128 x 128
-      skip2, layer3 = self.pconv2(layer2)
-      # print("level 3 channels", layer3.shape[2])
+      skip3, layer3 = self.pconv2(skip2)
+      # print("level 3 layer/skip", layer3.shape, skip3.shape)
 
       # Outputs 64 x 64 x 256
-      skip3, layer4 = self.pconv3(layer3)
-      # print("level 4 channels", layer4.shape[2])
+      skip4, layer4 = self.pconv3(skip3)
+      # print("level 4 layer/skip", layer4.shape, skip4.shape)
       
       # Outputs 32 x 32 x 512
-      skip4, x = self.pconv4(layer4)
-      
-      # print("level 5 channels", x.shape[2])
+      skip5, x = self.pconv4(skip4)
+      # print("level 5 channels", x.shape)
 
-      # Expand
+      ### Expand ###
       
       # Outputs 64 x 64 x 256
-      print(x.shape, skip3.shape)
-      x = self.tconv1(x, skip3)
-      print("After tconv1", x.shape, skip3.shape)
-      # err
-      x = self.conv1(x)
-
-      # print("level 4 channels", x.shape[2])
-
-      # Shortcut 4
-      # print('x2', x.shape)
-      # print('skip5', skip5.shape)
-      # print('skip4', skip4.shape)
-      # print('skip3', skip3.shape)
-      # x = x + skip5
-
-      # May need DoubleConvBlock? or shortcut may be best actually
+      expand4 = self.tconv1(skip5, skip4)
+      expand4 = self.conv1(expand4)
 
       # Outputs 128 x 128 x 128
-      x = self.tconv2(x, skip2)
-      x = self.conv2(x)
-
-      # Shortcut 3
-      # x = x + skip4
+      expand3 = self.tconv2(expand4, skip3)
+      expand3 = self.conv2(expand3)
 
       # Outputs 256 x 256 x 64
-      x = self.tconv3(x, skip1)
-      x = self.conv3(x)
-
-      # Shortcut 2
-      # x = x + skip3
+      expand2 = self.tconv3(expand3, skip2)
+      expand2 = self.conv3(expand2)
 
       # Outputs 512 x 512 x 32
-      x = self.tconv4(x, skip1)
-      x = self.conv4(x)
-      
-      # Shortcut 1
-      # x = x + skip2
+      expand1 = self.tconv4(expand2, skip1)
+      expand1 = self.conv4(expand1)
 
       # Outputs 512 x 512 x 1
-      x = self.conv5(x)
+      out = self.conv5(expand1)
 
       # return torch.sigmoid(x)
       # No sigmoid because using BCEWithLogistLoss which is more numerically stable (using log-sum-exp trick)
-      return x
+      return out
