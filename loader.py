@@ -14,7 +14,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # Extra augmentation (blur, noise, brightness)
-import albumentations as A
+# import albumentations as A
 
 
 ###Pre-Process Images###
@@ -110,30 +110,30 @@ class dset(Dataset):
         imy=imy.resize((512,512), Image.ANTIALIAS)
 
         ##data augmentation
-        if self.train:
+#         if self.train:
             
-          for _ in range(self.batch_transforms):
-            # Set of augmentations shown to be successful in SerdarHelli's usage in X-Ray imagery
-            aug = A.Compose([
-                    A.OneOf([A.RandomCrop(height=512, width=512),
-                                A.PadIfNeeded(min_height=512, min_width=512, p=0.5)],p=0.4),
-                    A.RandomBrightnessContrast(brightness_limit=0.25, contrast_limit=0.25,p=0.5),
-                    A.Compose([A.RandomScale(scale_limit=(-0.15, 0.15), p=1, interpolation=1),
-                                            A.PadIfNeeded(min_height=512, min_width=512, border_mode=cv2.BORDER_CONSTANT), 
-                                            A.Resize(512, 512, cv2.INTER_NEAREST), ],p=0.5),
-                    A.ShiftScaleRotate (shift_limit=0.325, scale_limit=0.15, rotate_limit=15,border_mode=cv2.BORDER_CONSTANT, p=1),
-                    A.Rotate(15,p=0.5),
-                    A.Blur(blur_limit=1, p=0.5),
-                    A.Downscale(scale_min=0.15, scale_max=0.25,  always_apply=False, p=0.5),
-                    A.GaussNoise(var_limit=(0.05, 0.1), mean=0, per_channel=True, always_apply=False, p=0.5),
-                    A.HorizontalFlip(p=0.25),
-            ])
+#           for _ in range(self.batch_transforms):
+#             # Set of augmentations shown to be successful in SerdarHelli's usage in X-Ray imagery
+#             aug = A.Compose([
+#                     A.OneOf([A.RandomCrop(height=512, width=512),
+#                                 A.PadIfNeeded(min_height=512, min_width=512, p=0.5)],p=0.4),
+#                     A.RandomBrightnessContrast(brightness_limit=0.25, contrast_limit=0.25,p=0.5),
+#                     A.Compose([A.RandomScale(scale_limit=(-0.15, 0.15), p=1, interpolation=1),
+#                                             A.PadIfNeeded(min_height=512, min_width=512, border_mode=cv2.BORDER_CONSTANT), 
+#                                             A.Resize(512, 512, cv2.INTER_NEAREST), ],p=0.5),
+#                     A.ShiftScaleRotate (shift_limit=0.325, scale_limit=0.15, rotate_limit=15,border_mode=cv2.BORDER_CONSTANT, p=1),
+#                     A.Rotate(15,p=0.5),
+#                     A.Blur(blur_limit=1, p=0.5),
+#                     A.Downscale(scale_min=0.15, scale_max=0.25,  always_apply=False, p=0.5),
+#                     A.GaussNoise(var_limit=(0.05, 0.1), mean=0, per_channel=True, always_apply=False, p=0.5),
+#                     A.HorizontalFlip(p=0.25),
+#             ])
             
-            augd = aug(image=np.array(imx), mask=np.array(imy))
-            imx, imy = augd['image'], augd['mask']
+#             augd = aug(image=np.array(imx), mask=np.array(imy))
+#             imx, imy = augd['image'], augd['mask']
             
-            del augd
-            del aug
+#             del augd
+#             del aug
 
         if self.transformX:
             imx = self.transformX(imx)
