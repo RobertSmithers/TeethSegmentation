@@ -27,10 +27,10 @@ Identify teeth in x-ray images using instance segmentation and labelling.
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">3D Teeth Segmentation</h3>
+<h3 align="center">Teeth Segmentation</h3>
 
   <p align="center">
-    With machine learning, we aim to identify teeth in 3D renderings via segmentation and labelling.
+    With machine learning, we aim to identify teeth via segmentation and labelling.
     <br />
     <br />
     <a href="https://github.com/RobertSmithers/3DTeethSegmentation/issues">Report Bug</a>
@@ -72,7 +72,7 @@ Identify teeth in x-ray images using instance segmentation and labelling.
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Teeth Art][teeth-art]](https://github.com/RobertSmithers/3DTeethSegmentation)
+[![Teeth Art][teeth-art]](https://github.com/RobertSmithers/TeethSegmentation)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -111,7 +111,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/RobertSmithers/3DTeethSegmentation.git
+   git clone https://github.com/RobertSmithers/TeethSegmentation.git
    ```
 2. (Optional) Create a virtual environment
 3. Install all required prerequisites
@@ -123,7 +123,7 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-3D Teeth Labelling is not a brand new field of study, though the amount of available data is highly limited. Teeth data is rarely open source, a product of scarcity in related machine learning research as well as protection of patients' privacy.
+Teeth Labelling is not a brand new field of study, though the amount of available data is highly limited. Teeth data is rarely open source, a product of scarcity in related machine learning research as well as protection of patients' privacy.
 
 With this teeth segmentation utility, artifical intelligence can autonomously label teeth scans and identify malformed, missing, or otherwise important concerns relating to the count and placement of teeth. The ability to label teeth in fractions of a second serves as a vital aide to dentistry personnel.
 
