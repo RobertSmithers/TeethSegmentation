@@ -148,6 +148,7 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 - README.md: Robert, Yuting
 - data/: Yuting, Daniella
 - results/: Robert
+- connected_component_images/: Daniella
 - '3Ddata_attempt.ipynb': Robert
 - 'X-Ray TeethSegmentation.pptx'(the powerpoint): Yuting, Daniella, Robert
 - 'connected_component.py': Yuting
