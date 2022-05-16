@@ -159,8 +159,7 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 - 'model.py': Robert
 - 'pytorch3d_render.ipynb': Yuting
 - 'train.ipynb': Robert
-- ‘data_preparation.py’ : Daniella
-  - ‘data_preparation.ipnyb’ : Daniella
+- 'data_preparation.ipnyb’ : Daniella
 - ‘contour_generation.ipynb’ : Daniella
 
 
