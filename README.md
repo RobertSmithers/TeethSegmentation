@@ -158,14 +158,15 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 - '3Ddata_attempt.ipynb': Robert
 - 'pytorch3d_render.ipynb': Yuting
 - 'Loader.py': Yuting, Robert
+- 'contour_generation.ipynb': Daniella
 - 'Loader.ipynb': Yuting
 - 'Res-Unet.py': Yuting
+- 'data_preparation.ipnyb': Daniella
 - 'model.py': Robert
+- 'pre_process.py': Daniella
 - 'train.ipynb': Robert
 - 'connected_component.py': Yuting
 - 'connected_component_segmentation.ipynb': Yuting, Daniella
-- 'data_preparation.ipnyb': Daniella
-- 'contour_generation.ipynb': Daniella
 - 'Test.ipynb': Yuting 
 - 
 - 'X-Ray TeethSegmentation.pptx'(the powerpoint): Yuting, Daniella, Robert
