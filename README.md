@@ -72,7 +72,8 @@ Identify teeth in X-ray images using instance segmentation and labelling.
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Teeth Art][teeth-art]](https://github.com/RobertSmithers/TeethSegmentation)
+[![Teeth Art][teeth-art1]]
+[![Teeth Art][teeth-art2]]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -174,7 +175,7 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
-## Contributing
+## To Contribute
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -241,5 +242,7 @@ Project Link: [https://github.com/RobertSmithers/TeethSegmentation](https://gith
 [license-url]: https://github.com/RobertSmithers/3DTeethSegmentation/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 <!-- [linkedin-url]: https://linkedin.com/in/linkedin_username -->
-[product-screenshot]: images/logo.png
-[teeth-art]: images/art.png
+[product-screenshot]: images/logo.jpg
+<!-- [teeth-art]: images/logo.png -->
+[teeth-art1]: images/input.png
+[teeth-art2]: images/predicted.png
