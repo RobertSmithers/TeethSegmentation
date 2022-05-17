@@ -1,5 +1,5 @@
 # TeethSegmentation
-Identify teeth in x-ray images using instance segmentation and labelling.
+Identify teeth in X-ray images using instance segmentation and labelling.
 
 <div id="top"></div>
 
@@ -23,7 +23,7 @@ Identify teeth in x-ray images using instance segmentation and labelling.
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/RobertSmithers/3DTeethSegmentation">
+  <a href="https://github.com/RobertSmithers/TeethSegmentation">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -33,9 +33,9 @@ Identify teeth in x-ray images using instance segmentation and labelling.
     With machine learning, we aim to identify teeth via segmentation and labelling.
     <br />
     <br />
-    <a href="https://github.com/RobertSmithers/3DTeethSegmentation/issues">Report Bug</a>
+    <a href="https://github.com/RobertSmithers/TeethSegmentation/issues">Report Bug</a>
     ·
-    <a href="https://github.com/RobertSmithers/3DTeethSegmentation/issues">Request Feature</a>
+    <a href="https://github.com/RobertSmithers/TeethSegmentation/issues">Request Feature</a>
   </p>
 </div>
 
@@ -91,9 +91,12 @@ Identify teeth in x-ray images using instance segmentation and labelling.
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get a local copy up and running follow these simple example steps.
+### Demo
+```diff
+- To try our program or test your own x-ray image, open 'Test.ipynb' and follow instruction.
+```
 
-### Prerequisites
+<!-- ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them. It is recommended to install these within a virtual environment within the repository.
 
@@ -105,7 +108,7 @@ This is an example of how to list things you need to use the software and how to
 * PyTorch3D
   ```sh
   pip install "git+https://github.com/facebookresearch/pytorch3d.git@stable"
-  ```
+  ``` -->
 
 ### Installation
 
@@ -162,7 +165,7 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 - 'connected_component_segmentation.ipynb': Yuting, Daniella
 - 'data_preparation.ipnyb': Daniella
 - 'contour_generation.ipynb': Daniella
-- 'Test.ipynb': Yuting, 
+- 'Test.ipynb': Yuting 
 - 
 - 'X-Ray TeethSegmentation.pptx'(the powerpoint): Yuting, Daniella, Robert
 - Final Report: Daniella, Yuting, Robert
