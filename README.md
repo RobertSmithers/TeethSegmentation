@@ -149,18 +149,23 @@ See the [open issues](https://github.com/RobertSmithers/3DTeethSegmentation/issu
 - data/: Yuting, Daniella
 - results/: Robert
 - connected_component_images/: Daniella
+- models/: Robert
+- 
 - '3Ddata_attempt.ipynb': Robert
-- 'X-Ray TeethSegmentation.pptx'(the powerpoint): Yuting, Daniella, Robert
-- 'connected_component.py': Yuting
-  - 'connected_component_segmentation.ipynb': Yuting, Daniella
-- 'Loader.py': Yuting
-  - 'data_preparation.ipynb': Daniella, Yuting
-  - 'Loader.ipynb': Yuting
-- 'model.py': Robert
 - 'pytorch3d_render.ipynb': Yuting
+- 'Loader.py': Yuting, Robert
+- 'Loader.ipynb': Yuting
+- 'Res-Unet.py': Yuting
+- 'model.py': Robert
 - 'train.ipynb': Robert
-- 'data_preparation.ipnyb’ : Daniella
-- ‘contour_generation.ipynb’ : Daniella
+- 'connected_component.py': Yuting
+- 'connected_component_segmentation.ipynb': Yuting, Daniella
+- 'data_preparation.ipnyb': Daniella
+- 'contour_generation.ipynb': Daniella
+- 'Test.ipynb': Yuting, 
+- 
+- 'X-Ray TeethSegmentation.pptx'(the powerpoint): Yuting, Daniella, Robert
+- Final Report: Daniella, Yuting, Robert
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -201,7 +206,7 @@ Yuting Ji - jiyz@bc.edu
 
 Daniella Zunic - zunicd@bc.edu
 
-Project Link: [https://github.com/RobertSmithers/3DTeethSegmentation](https://github.com/RobertSmithers/3DTeethSegmentation)
+Project Link: [https://github.com/RobertSmithers/TeethSegmentation](https://github.com/RobertSmithers/TeethSegmentation)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -217,7 +222,7 @@ Project Link: [https://github.com/RobertSmithers/3DTeethSegmentation](https://gi
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-[![Teeth Art][product-screenshot]](https://github.com/RobertSmithers/3DTeethSegmentation)
+[![Teeth Art][product-screenshot]](https://github.com/RobertSmithers/TeethSegmentation)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
