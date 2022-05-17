@@ -72,8 +72,8 @@ Identify teeth in X-ray images using instance segmentation and labelling.
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Teeth Art][teeth-art1]]
-[![Teeth Art][teeth-art2]]
+[![Teeth Art][teeth-art1]](https://github.com/RobertSmithers/TeethSegmentation)
+[![Teeth Art][teeth-art2]](https://github.com/RobertSmithers/TeethSegmentation)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
